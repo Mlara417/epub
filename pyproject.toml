@@ -17,4 +17,4 @@ dependencies = [
 ]
 
 [project.scripts]
-epub = "epub.cli:main"
+epub = "cli.cli:main"

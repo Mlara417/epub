@@ -2,7 +2,6 @@ import typer
 from cli.commands.edit import Edit
 from cli.commands.setup import Setup
 
-
 class EpubCLI:
 	def __init__(self):
 		self.cli = typer.Typer()
