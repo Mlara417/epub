@@ -1,7 +1,6 @@
 import typer
-import subprocess
-from epub.commands.edit import Edit
-from epub.commands.setup import Setup
+from cli.commands.edit import Edit
+from cli.commands.setup import Setup
 
 
 class EpubCLI:
