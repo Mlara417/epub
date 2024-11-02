@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "epub"
+version = "1.0.0"
+description = "epub manipulation package"
+authors = [
+	{ name = "Moses Lara", email = "mlara417@gmail.com" }
+]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = [
+	"typer"
+]
+
+[project.scripts]
+epub = "cli.cli:main"
