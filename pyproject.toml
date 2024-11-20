@@ -20,6 +20,10 @@ epub = "cli.main:main"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build]
+include = ["epub", "pyproject.toml", "README.md", "LICENSE"]
+exclude = ["__pycache__/", "tests/"]
+
 [tool.hatch.version]
 path = "pyproject.toml"
 pattern = 'version = "{version}"'
