@@ -1,4 +1,4 @@
-name: Deployment
+name: Build and Publish to PyPI
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  version_and_release:
+  version_and_publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
