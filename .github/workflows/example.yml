@@ -11,8 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
-
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+      
+      - name: Setup Git Config
+        uses: qoomon/actions--setup-git@v1.1.1
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -27,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cz bump --yes
-          git push origin main --tags
+          git push origin ${{ github.ref_name }} --tags
 
       - name: Build and Publish
         env:
