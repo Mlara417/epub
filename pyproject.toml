@@ -23,10 +23,6 @@ version_scheme = "semver2"
 tag_format = "$version"
 version_files = ["pyproject.toml"]
 
-
-[tool.commitizen.hooks]
-post_bump = "hatch version {new_version}"
-
 [tool.hatch.version]
 path = "pyproject.toml"
 pattern = 'version = "{version}"'
