@@ -36,7 +36,6 @@ jobs:
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           echo "Commit message: $COMMIT_MESSAGE"
           cz check -m "$COMMIT_MESSAGE"
-
           cz bump --yes --dry-run
 
       - name: Build and Publish
