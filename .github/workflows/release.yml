@@ -12,9 +12,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4.2.2
 
-      - name: Setup Git Config
-        uses: qoomon/actions--setup-git@v1.1.1
-      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -27,3 +24,12 @@ jobs:
       - name: Generate Release Notes
         run: |
           echo "RELEASE_NOTES=$(cz changelog --dry-run)" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$(git describe --tags)" >> $GITHUB_ENV
+
+      - name: Create Release
+        run: |
+          gh release create ${{ env.RELEASE_VERSION }} \
+            --title "Release ${{ env.RELEASE_VERSION }}" \
+            --notes "${{ env.RELEASE_NOTES }}" \
+            --generate-notes
+            --prerelease
