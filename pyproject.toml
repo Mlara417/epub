@@ -37,3 +37,12 @@ pattern = 'version = "{version}"'
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.1.1"
+
+[tool.commitizen.bump_map]
+build = "patch"
+chore = "patch"
+ci = "patch"
+refactor = "patch"
+perf = "patch"
+test = ""
+docs = ""
