@@ -1,0 +1,29 @@
+name: Create GitHub Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  version_and_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.2.2
+
+      - name: Setup Git Config
+        uses: qoomon/actions--setup-git@v1.1.1
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Tools
+        run: |
+          pip install commitizen
+      
+      - name: Generate Release Notes
+        run: |
+          echo "RELEASE_NOTES=$(cz changelog --dry-run)" >> $GITHUB_ENV
