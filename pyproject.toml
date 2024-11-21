@@ -21,11 +21,10 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-include = ["epub", "pyproject.toml", "README.md", "LICENSE"]
+include = ["epub", "pyproject.toml", "README.md"]
 exclude = ["__pycache__/", "tests/"]
 
 [tool.hatch.publish]
-#url = "https://upload.pypi.org/legacy/"
 url = { value = "https://test.pypi.org/legacy/" }
 auth = {env = "TEST_PYPI_API_TOKEN"}
 
@@ -45,3 +44,5 @@ chore = "patch"
 ci = "patch"
 refactor = "patch"
 perf = "patch"
+test = ""
+docs = ""
