@@ -1,6 +1,9 @@
-name: Example Workflow
+name: Deployment
 
 on:
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -17,8 +20,6 @@ jobs:
       - name: Setup Git Config
         uses: qoomon/actions--setup-git@v1.1.1
       
-        uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -51,13 +52,3 @@ jobs:
         run: |
           hatch build
           hatch publish --no-prompt
-          cz bump --yes
-          git push origin main --tags
-
-      - name: Build and Publish
-        env:
-          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          hatch build
-          hatch publish
