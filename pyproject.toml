@@ -31,6 +31,7 @@ pattern = 'version = "{version}"'
 include = ["epub", "pyproject.toml", "README.md", "LICENSE"]
 exclude = ["__pycache__/", "tests/"]
 
+
 [tool.hatch.publish]
 #url = "https://upload.pypi.org/legacy/"
 url = { value = "https://test.pypi.org/legacy/" }
