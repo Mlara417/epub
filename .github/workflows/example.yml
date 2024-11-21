@@ -1,10 +1,9 @@
-name: Build, Test, and Release
+name: Example Workflow
 
 on:
   pull_request:
     branches:
       - main
-
   workflow_dispatch:
 
 jobs:
