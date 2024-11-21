@@ -15,7 +15,8 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
-      
+
+
       - name: Setup Git Config
         uses: qoomon/actions--setup-git@v1.1.1
       
@@ -32,8 +33,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cz bump --yes
-          git push origin ${{ github.ref_name }} --tags
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          echo "Commit message: $COMMIT_MESSAGE"
+          cz check -m "$COMMIT_MESSAGE"
+
+          cz bump --yes --dry-run
 
       - name: Build and Publish
         env:
