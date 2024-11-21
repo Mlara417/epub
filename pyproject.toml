@@ -24,6 +24,12 @@ build-backend = "hatchling.build"
 include = ["epub", "pyproject.toml", "README.md", "LICENSE"]
 exclude = ["__pycache__/", "tests/"]
 
+[tool.hatch.publish]
+#url = "https://upload.pypi.org/legacy/"
+url = "https://test.pypi.org/legacy/"
+auth = {env = "TEST_PYPI_API_TOKEN"}
+
+
 [tool.hatch.version]
 path = "pyproject.toml"
 pattern = 'version = "{version}"'
