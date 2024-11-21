@@ -37,8 +37,13 @@ jobs:
           echo "Commit message: $COMMIT_MESSAGE"
           
           cz check -m "$COMMIT_MESSAGE"
-          cz bump --yes --dry-run
+          cz bump --yes
 
+      - name: Commit Version Bump
+        run: |
+          git push origin ${{ github.ref_name }}
+          git push origin --tags
+      
       - name: Build and Publish
         env:
           HATCH_INDEX_REPO: https://test.pypi.org/legacy/
