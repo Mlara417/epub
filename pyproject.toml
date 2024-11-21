@@ -21,12 +21,11 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-include = ["epub", "pyproject.toml", "README.md", "LICENSE"]
+include = ["epub", "pyproject.toml", "README.md"]
 exclude = ["__pycache__/", "tests/"]
 
 [tool.hatch.publish]
-#url = "https://upload.pypi.org/legacy/"
-url = "https://test.pypi.org/legacy/"
+url = { value = "https://test.pypi.org/legacy/" }
 auth = {env = "TEST_PYPI_API_TOKEN"}
 
 
@@ -40,10 +39,12 @@ version = "0.1.1"
 version_scheme = "semver2"
 
 [tool.commitizen.bump_map]
-build = "patch"
-chore = "patch"
-ci = "patch"
-refactor = "patch"
-perf = "patch"
-test = ""
-docs = ""
+build = { increment = "patch", description = "Build-related changes" }
+chore = { increment = "patch", description = "Routine tasks" }
+ci = { increment = "patch", description = "Changes to CI configuration" }
+refactor = { increment = "patch", description = "Code refactoring" }
+perf = { increment = "patch", description = "Performance optimizations" }
+test = { increment = "", description = "Test-related changes, no version bump" }
+docs = { increment = "", description = "Documentation updates, no version bump" }
+
+

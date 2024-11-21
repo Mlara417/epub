@@ -23,7 +23,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.9.6"
 
       - name: Install Tools
         run: |
@@ -35,8 +35,8 @@ jobs:
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           echo "Commit message: $COMMIT_MESSAGE"
+          echo "Commit message: $COMMIT_MESSAGE"
           cz check -m "$COMMIT_MESSAGE"
-
           cz bump --yes --dry-run
 
       - name: Build and Publish
