@@ -7,7 +7,7 @@ on:
         description: 'Version to release'
         required: true
         default: 'v0.0.1'
-
+  workflow_call:
 jobs:
   create-release:
     runs-on: ubuntu-latest
