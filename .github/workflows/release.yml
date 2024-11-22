@@ -8,11 +8,7 @@ on:
         required: true
         default: 'v0.0.1'
   workflow_call:
-    inputs:
-      version:
-        description: 'Version to release'
-        required: true
-        type: string
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -49,6 +45,7 @@ jobs:
           RELEASE_VERSION="${{ env.RELEASE_VERSION }}"
           if [ -z "$RELEASE_VERSION" ]; then
             RELEASE_VERSION=$(git describe --tags --abbrev=0)
+            echo "No version provided. Using latest tag: $RELEASE_VERSION"
           fi
 
           RELEASE_NOTES=$(cz changelog --incremental --unreleased-version "$RELEASE_VERSION" --dry-run)
