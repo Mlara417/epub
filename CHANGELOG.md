@@ -1,25 +1,3 @@
-## v0.1.5 (2024-11-22)
-
-### Fix
-
-- update release workflow to use correct branch reference and improve changelog generation
-- improve release workflow to correctly handle environment variables and enhance logging
-- update release workflow to use environment variable for release version and correct changelog command
-- update changelog command to use starting revision instead of starting version
-- update changelog command to use starting version from latest tag
-- use correct syntax for accessing environment variable in release workflow
-- set fetch-depth to 0 in checkout step of release workflow
-- use environment variable for branch reference in build and publish workflow
-- add GitHub CLI setup step and specify commitizen version in release workflow
-- add workflow_dispatch input for version release in GitHub Actions
-- update release workflow to generate incremental release notes
-- add GitHub Actions workflow for automated release creation
-
-### Refactor
-
-- rename job from version_and_release to create-release in release workflow
-- rename deployment workflow to build and publish; update version format in pyproject.toml
-
 ## v0.1.4 (2024-11-21)
 
 ### Fix

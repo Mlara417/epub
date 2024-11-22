@@ -56,3 +56,5 @@ jobs:
   release:
     needs: version_and_publish
     uses: ./.github/workflows/release.yml
+    with: 
+      version: ${{ steps.version_and_publish.outputs.version }}
