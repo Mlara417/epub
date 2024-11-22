@@ -9,12 +9,14 @@ on:
 jobs:
   version_and_publish:
     runs-on: ubuntu-latest
+    env:
+      BRANCH: ${{ github.base_ref || github.ref_name }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
-          ref: ${{ github.base_ref || github.ref_name }}
+          ref: ${{ env.BRANCH }}
 
 
       - name: Setup Git Config
@@ -41,7 +43,7 @@ jobs:
 
       - name: Commit Version Bump
         run: |
-          git push origin ${{ github.ref_name }}
+          git push origin ${{ env.BRANCH }}
           git push origin --tags
       
       - name: Build and Publish
