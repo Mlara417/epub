@@ -39,13 +39,18 @@ jobs:
         env:
           RELEASE_VERSION: ${{ inputs.version }}
         run: |
-          if [ -z "${{ env.RELEASE_VERSION }}" ]; then
+          RELEASE_VERSION=$RELEASE_VERSION
+          if [ -z "$RELEASE_VERSION" ]; then
             RELEASE_VERSION=$(git describe --tags)
           fi
-          START_TAG=$(git describe --tags --abbrev=0)
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
-          echo "RELEASE_NOTES=$(cz changelog --incremental --unreleased-version ${{ env.RELEASE_VERSION }} --dry-run)" >> $GITHUB_ENV
-          cz changelog --incremental --starting-rev "$START_TAG" --unreleased-version "${{ env.RELEASE_VERSION }}"
+
+          START_TAG=$(git describe --tags --abbrev=0)
+
+          RELEASE_NOTES=$(cz changelog --incremental --start-rev "$START_TAG" --unreleased-version "$RELEASE_VERSION" --dry-run)
+          echo "RELEASE_NOTES=$RELEASE_NOTES" >> $GITHUB_ENV
+
+          cz changelog --incremental --start-rev "$START_TAG" --unreleased-version "$RELEASE_VERSION"
 
       - name: Create Release
         run: |
