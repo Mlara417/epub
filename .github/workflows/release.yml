@@ -18,6 +18,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4.2.2
 
+      - name: Setup GitHub CLI
+        uses: sersoft-gmbh/setup-gh-cli-action@v2.0.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 2.62.0
+    
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -25,7 +31,7 @@ jobs:
 
       - name: Install Tools
         run: |
-          pip install commitizen
+          pip install commitizen==3.31.0
       
       - name: Generate Release Notes
         env:
