@@ -1,6 +1,6 @@
 [project]
 name = "epub"
-version = "v0.1.4"
+version = "v0.1.5"
 description = "epub manipulation package"
 authors = [
 	{ name = "Moses Lara", email = "mlara417@gmail.com" }
@@ -18,7 +18,7 @@ epub = "cli.main:main"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.1.4"
+version = "0.1.5"
 version_scheme = "semver2"
 tag_format = "v$version"
 version_files = ["pyproject.toml"]

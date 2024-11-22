@@ -1,23 +1,22 @@
 name: Build and Publish to PyPI
 
 on:
-  pull_request:
+  push:
     branches:
       - main
   workflow_dispatch:
 
 jobs:
-  version_and_publish:
+  build_and_publish:
     runs-on: ubuntu-latest
     env:
-      BRANCH: ${{ github.base_ref || github.ref_name }}
+      BRANCH: ${{ github.ref_name }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
           ref: ${{ env.BRANCH }}
-
 
       - name: Setup Git Config
         uses: qoomon/actions--setup-git@v1.1.1
@@ -54,3 +53,6 @@ jobs:
         run: |
           hatch build
           hatch publish --no-prompt
+  release:
+    needs: version_and_publish
+    uses: ./.github/workflows/release.yml
