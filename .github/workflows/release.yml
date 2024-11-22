@@ -23,13 +23,14 @@ jobs:
       
       - name: Generate Release Notes
         run: |
-          echo "RELEASE_NOTES=$(cz changelog --dry-run)" >> $GITHUB_ENV
           echo "RELEASE_VERSION=$(git describe --tags)" >> $GITHUB_ENV
+          echo "RELEASE_NOTES=$(cz changelog --incremental --unreleased-version ${{ env.RELEASE_VERSION}} --dry-run)" >> $GITHUB_ENV
+          cz changelog --incremental --unreleased-version ${{ env.RELEASE_VERSION}}
 
       - name: Create Release
         run: |
           gh release create ${{ env.RELEASE_VERSION }} \
             --title "Release ${{ env.RELEASE_VERSION }}" \
             --notes "${{ env.RELEASE_NOTES }}" \
-            --generate-notes
+            --generate-notes \
             --prerelease
