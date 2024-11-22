@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
 
       - name: Setup GitHub CLI
         uses: sersoft-gmbh/setup-gh-cli-action@v2.0.1
