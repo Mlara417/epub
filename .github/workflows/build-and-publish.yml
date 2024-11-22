@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  version_and_publish:
+  build_and_publish:
     runs-on: ubuntu-latest
     env:
       BRANCH: ${{ github.ref_name }}
