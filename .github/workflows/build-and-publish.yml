@@ -1,7 +1,7 @@
 name: Build and Publish to PyPI
 
 on:
-  pull_request:
+  push:
     branches:
       - main
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
   version_and_publish:
     runs-on: ubuntu-latest
     env:
-      BRANCH: ${{ github.base_ref || github.ref_name }}
+      BRANCH: ${{ github.ref_name }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4.2.2
