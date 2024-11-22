@@ -54,5 +54,5 @@ jobs:
           hatch build
           hatch publish --no-prompt
   release:
-    needs: version_and_publish
+    needs: build_and_publish
     uses: ./.github/workflows/release.yml
