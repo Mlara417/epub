@@ -45,7 +45,7 @@ jobs:
           START_TAG=$(git describe --tags --abbrev=0)
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
           echo "RELEASE_NOTES=$(cz changelog --incremental --unreleased-version ${{ env.RELEASE_VERSION }} --dry-run)" >> $GITHUB_ENV
-          cz changelog --incremental --starting-version "$START_TAG" --unreleased-version "${{ env.RELEASE_VERSION }}"
+          cz changelog --incremental --starting-rev "$START_TAG" --unreleased-version "${{ env.RELEASE_VERSION }}"
 
       - name: Create Release
         run: |
