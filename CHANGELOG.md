@@ -1,3 +1,15 @@
+## v0.1.6 (2024-11-22)
+
+### Fix
+
+- update job dependency in build-and-publish workflow
+- Merge pull request #18 from Mlara417/fix-release-workflow
+- change trigger from pull_request to push in build-and-publish workflow
+
+### Refactor
+
+- rename jobs in workflows for clarity
+
 ## v0.1.5 (2024-11-22)
 
 ### Fix
