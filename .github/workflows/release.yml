@@ -12,7 +12,7 @@ on:
         default: 'v0.0.1'
 
 jobs:
-  version_and_release:
+  create-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -36,7 +36,7 @@ jobs:
           fi
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
           echo "RELEASE_NOTES=$(cz changelog --incremental --unreleased-version ${{ env.RELEASE_VERSION }} --dry-run)" >> $GITHUB_ENV
-          cz changelog --incremental --unreleased-version ${{ env.RELEASE_VERSION }}
+          cz changelog --incremental --unreleased-version "${{ env.RELEASE_VERSION }}"
 
       - name: Create Release
         run: |
