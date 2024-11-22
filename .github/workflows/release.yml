@@ -19,7 +19,11 @@ jobs:
         uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
-
+          ref: ${{ github.ref_name }}
+      
+      - name: Setup Git Config
+        uses: qoomon/actions--setup-git@v1.1.1
+      
       - name: Setup GitHub CLI
         uses: sersoft-gmbh/setup-gh-cli-action@v2.0.1
         with:
@@ -35,7 +39,7 @@ jobs:
         run: |
           pip install commitizen==3.31.0
       
-      - name: Generate Release Notes
+      - name: Create Release
         env:
           RELEASE_VERSION: ${{ inputs.version }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,11 +48,14 @@ jobs:
           if [ -z "$RELEASE_VERSION" ]; then
             RELEASE_VERSION=$(git describe --tags)
           fi
-          START_TAG=$(git describe --tags --abbrev=0)
 
-          RELEASE_NOTES=$(cz changelog --incremental --start-rev "$START_TAG" --unreleased-version "$RELEASE_VERSION" --dry-run)
+          RELEASE_NOTES=$(cz changelog --incremental --unreleased-version "$RELEASE_VERSION" --dry-run)
 
-          cz changelog --incremental --start-rev "$START_TAG" --unreleased-version "$RELEASE_VERSION"
+          cz changelog --incremental --unreleased-version "$RELEASE_VERSION"
+
+          git add CHANGELOG.md
+          git commit -m "chore(release): Update CHANGELOG.md for $RELEASE_VERSION"
+          git push origin ${{ github.ref_name }}
 
           gh release create $RELEASE_VERSION \
             --title "Release $RELEASE_VERSION" \
