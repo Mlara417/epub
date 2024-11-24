@@ -1,3 +1,9 @@
+## v0.1.7 (2024-11-24)
+
+### Refactor
+
+- refactor EPUB cover handling and introduce XML utility class
+
 ## v0.1.6 (2024-11-22)
 
 ### Fix
