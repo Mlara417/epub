@@ -1,3 +1,9 @@
+## v0.1.8 (2024-11-24)
+
+### Refactor
+
+- replace subprocess file movement with utility function in cover command
+
 ## v0.1.7 (2024-11-24)
 
 ### Refactor
