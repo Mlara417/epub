@@ -7,4 +7,4 @@ class Setup:
         help="The path to the epub file"
         )
     ):
-        Epub3.init(self, epub_path)
+        Epub3().init(epub_path)

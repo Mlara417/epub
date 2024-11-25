@@ -1,24 +1,23 @@
-import os, typer, subprocess
-from cli.src.xml import Xml
+import os, typer
 from lxml.etree import _Element
+from cli.src.utils import unzip_file
+from cli.src.xml import Xml
 
 class Epub3:
     """Class to handle EPUB3 files"""
-    def __init__(self, workspace: str = "epub-unzipped"):
+    WORKSPACE: str = "epub-unzipped"
+    
+    def __init__(self, workspace: str = WORKSPACE):
         self.workspace = workspace
         self.xml = Xml()
         
     def init(self, epub_path: str):
-        workspace = "epub-unzipped"
-        if not os.path.exists(workspace):
-            os.mkdir(workspace)
-            typer.secho(message="Workspace created", fg='green')
-            try:
-                subprocess.run(["unzip", "-oq", epub_path, "-d", workspace], check=True)
-                typer.secho(message="EPUB file extracted", fg='green')
-            except subprocess.CalledProcessError as e:
-                typer.secho(message=f"Error unzipping file: {e}", fg='red')
+        if not os.path.exists(self.workspace):
+            typer.secho(message="Creating Workspace...", fg='green')
 
+            os.mkdir(self.workspace)
+            unzip_file(epub_path, self.workspace)
+            
             typer.secho(message="Setup complete", fg='green')
         else:
             typer.secho(message="Workspace already exists", fg='yellow')
