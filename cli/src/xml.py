@@ -37,6 +37,6 @@ class Xml:
         )
         target_node.append(new_node)
 
-    def save_xml(self):
+    def save(self):
         """Write the tree to a file"""
         self.tree.write(self.file_path, pretty_print=True, xml_declaration=True, encoding="utf-8")

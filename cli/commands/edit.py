@@ -1,6 +1,6 @@
-import typer, subprocess
+import typer
 from cli.src.epub3 import Epub3
-from cli.src.utils import move_file
+from cli.src.utils import move_file, success
 class Edit:
     COVER = "cover"
     
@@ -12,18 +12,14 @@ class Edit:
         @self.cli.command()
         def cover(cover_path: str = typer.Argument(..., help="The path to the cover image")):
             """Add a cover image to an EPUB file"""
-            move_file(cover_path, self.epub3.workspace)
-            
+            success(f"Adding cover image {cover_path} to the EPUB file")
+
             cover_image = cover_path.split('/')[-1]
+            move_file(cover_path, self.epub3.workspace)
 
-            self.epub3.load_content_opf(self.epub3.workspace + "/content.opf")
-            self.epub3.xml.add_node("item", "manifest", {"id": self.COVER, "href": cover_image, "media-type": "image/jpeg"})
-            self.epub3.xml.add_node("meta", "metadata", {"name": self.COVER, "content": self.COVER})
-            self.epub3.xml.save_xml()
+            self.epub3.load_content_opf()
+            self.epub3.add_manifest_subnode("item", {"id": self.COVER, "href": cover_image, "media-type": "image/jpeg"})
+            self.epub3.add_metadata_subnode("meta", {"name": self.COVER, "content": self.COVER})
 
-            subprocess.run(["zip", "-X0", "output.epub", "mimetype"], cwd=self.epub3.workspace)
-
-            subprocess.run(["zip", "-Xr9D", "../output.epub", "."], cwd=self.epub3.workspace)
-
-
-
+            self.epub3.save_xml()
+            self.epub3.package_epub()
