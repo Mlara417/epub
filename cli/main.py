@@ -1,6 +1,7 @@
 import typer
 from cli.commands.edit import Edit
 from cli.commands.setup import Setup
+from cli.commands.read import Read
 
 class EpubCLI:
     def __init__(self):
@@ -11,6 +12,7 @@ class EpubCLI:
         # Initialize commands
         edit_commands = Edit()
         setup_commands= Setup()
+        read_commands = Read()
 
         # Register commands
         self.cli.command(name="setup")(setup_commands.main)
@@ -19,6 +21,7 @@ class EpubCLI:
 
         # Register nested commands
         self.cli.add_typer(edit_commands.cli, name="edit")
+        self.cli.add_typer(read_commands.cli, name="read")
 
     def run(self):
         self.cli()
