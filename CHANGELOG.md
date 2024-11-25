@@ -1,3 +1,14 @@
+## v0.1.9 (2024-11-25)
+
+### Refactor
+
+- enhance file handling utilities with success and error messaging
+- enhance EPUB3 class with new methods for manifest, metadata, and spine management
+- add setup message for EPUB file editing in setup command
+- enhance cover image addition process in EPUB editing
+- rename save_xml method to save for clarity
+- streamline EPUB initialization and file extraction process
+
 ## v0.1.8 (2024-11-24)
 
 ### Refactor
