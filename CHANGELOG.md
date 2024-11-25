@@ -1,3 +1,9 @@
+## v0.1.11 (2024-11-25)
+
+### Fix
+
+- implement read command to retrieve metadata from EPUB files
+
 ## v0.1.10 (2024-11-25)
 
 ### Refactor
