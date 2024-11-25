@@ -8,6 +8,7 @@ import json
 class Epub3:
     """Class to handle EPUB3 files"""
     CONTENT_OPF: str = "/content.opf"
+    DC: str = ".//dc:"
     MANIFEST: str = "manifest"
     METADATA: str = "metadata"
     OUTPUT_EPUB: str = "output.epub"
@@ -29,7 +30,6 @@ class Epub3:
 
     def load_content_opf(self, content_opf_path: str = WORKSPACE + CONTENT_OPF) -> _Element:
         """Load the content.opf file tree"""
-        success(f"Loading content.opf file: {content_opf_path}")
         self.xml.load_xml(content_opf_path)
         self.xml.get_tree_root()
 
@@ -59,6 +59,11 @@ class Epub3:
         success("Getting metadata from content.opf")
         self.load_content_opf()
         return self.xml.get_node(self.METADATA)
+
+    def get_opf_metadata_value(self, search: str):
+        """Get the value of a metadata tag"""
+        self.load_content_opf()
+        return self.xml.get_node_value(f"{self.DC}{search}")
 
     def get_opf_spine(self):
         """Get the spine from the content.opf file"""

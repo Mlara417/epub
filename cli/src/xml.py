@@ -28,6 +28,10 @@ class Xml:
         """Search for a top-level node in the XML tree"""
         return self.root.xpath(f"{self.OPF}{self.ROOT_ELEMENT}", namespaces=self.NAMESPACES)[0].xpath(f"{self.OPF}{search_node}", namespaces=self.NAMESPACES)[0]
 
+    def get_node_value(self, search: str) -> str:
+        """Get the value of an XML node"""
+        return(self.root.find(search, namespaces=self.NAMESPACES).text)
+
     def add_node(self,node_name, target_node_name, attributes: dict):
         """Add a new node to the XML tree"""
         target_node = self.get_node(target_node_name)
