@@ -1,14 +1,16 @@
 import os, shutil
-from re import M
 from lxml.etree import _Element
-from cli.src.utils import unzip_file, zip_file, success, warning
+from cli.src.utils import unzip_file, zip_file, success, warning, error
 from cli.src.xml import Xml
+from epubcheck import EpubCheck
+import json
 
 class Epub3:
     """Class to handle EPUB3 files"""
     CONTENT_OPF: str = "/content.opf"
     MANIFEST: str = "manifest"
     METADATA: str = "metadata"
+    OUTPUT_EPUB: str = "output.epub"
     SPINE: str = "spine"
     WORKSPACE: str = "epub-unzipped"
     
@@ -64,17 +66,27 @@ class Epub3:
         self.load_content_opf()
         return self.xml.get_node(self.SPINE)
 
-    def package_epub(self, output_file: str = "output.epub"):
+    def package_epub(self, output_file: str = OUTPUT_EPUB):
         """Package the EPUB file"""
         success("Packaging EPUB file...")
         zip_file("-X0", output_file, "mimetype", self.workspace)
-        zip_file("-Xr9D", f"../{output_file}", ".", self.workspace)
+        zip_file("-Xr9D", f"..{output_file}", ".", self.workspace)
         success(f"EPUB file packaged: {output_file}")
 
     def save_xml(self):
         """Save the loaded XML tree"""
         success("Saving XML tree...")
         self.xml.save()
+
+    def validate_epub(self, output_epub: str = "/" + OUTPUT_EPUB):
+        """Validate the EPUB file"""
+        success("Validating EPUB file...")
+        epubcheck = EpubCheck(output_epub)
+        if not epubcheck.messages:
+            success("EPUB file is valid")
+        else:
+            error("EPUB file has validation issues")
+            print(json.dumps(epubcheck.messages, indent=4))
         
     def cleanup(self):
         """Remove the workspace directory"""

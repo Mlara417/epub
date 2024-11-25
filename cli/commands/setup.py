@@ -17,3 +17,6 @@ class Setup:
 
     def teardown(self):
         self.epub.cleanup()
+
+    def validate(self):
+        self.epub.validate_epub()

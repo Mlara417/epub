@@ -10,7 +10,8 @@ license = { file = "LICENSE" }
 requires-python = ">=3.9"
 dependencies = [
     "typer==0.13.0",
-    "lxml==5.3.0"
+    "lxml==5.3.0",
+    "epubcheck==v5.1.0"
 ]
 
 [project.scripts]
