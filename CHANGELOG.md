@@ -1,3 +1,9 @@
+## v0.1.10 (2024-11-25)
+
+### Refactor
+
+- implement setup and cleanup methods for EPUB file management
+
 ## v0.1.9 (2024-11-25)
 
 ### Refactor
