@@ -80,6 +80,14 @@ Unzips epub file into a folder called epub-unzipped in repo root which will be u
 epub setup EPUB_PATH
 ```
 
+### `clean`
+
+Cleans up the workspace folder (unzipped epub).
+
+```bash
+epub clean
+```
+
 ## Contributing
 
 1. Fork the repo
