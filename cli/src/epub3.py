@@ -1,7 +1,7 @@
-import os, typer
+import os, shutil
 from re import M
 from lxml.etree import _Element
-from cli.src.utils import unzip_file, zip_file, success, error, warning
+from cli.src.utils import unzip_file, zip_file, success, warning
 from cli.src.xml import Xml
 
 class Epub3:
@@ -76,11 +76,11 @@ class Epub3:
         success("Saving XML tree...")
         self.xml.save()
         
-    def _cleanup(self):
+    def cleanup(self):
         """Remove the workspace directory"""
         success("Cleaning up workspace...")
         if os.path.exists(self.workspace):
-            os.rmdir(self.workspace)
+            shutil.rmtree(self.workspace)
             success("Workspace removed")
         else:
             warning("Workspace does not exist")

@@ -14,6 +14,7 @@ class EpubCLI:
 
         # Register commands
         self.cli.command(name="setup")(setup_commands.main)
+        self.cli.command(name="clean")(setup_commands.teardown)
 
         # Register nested commands
         self.cli.add_typer(edit_commands.cli, name="edit")
