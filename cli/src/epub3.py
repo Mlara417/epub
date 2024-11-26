@@ -4,6 +4,7 @@ from cli.src.utils import unzip_file, zip_file, success, warning, error
 from cli.src.xml import Xml
 from epubcheck import EpubCheck
 import json
+from cli.src.exceptions import ValidationError
 
 class Epub3:
     """Class to handle EPUB3 files"""
@@ -20,13 +21,8 @@ class Epub3:
         self.xml = Xml()
         
     def init(self, epub_path: str):
-        if not os.path.exists(self.workspace):
-            success('Creating Workspace...')
-
-            os.mkdir(self.workspace)
-            unzip_file(epub_path, self.workspace)
-        else:
-            warning("Please remove the workspace before creating a new one")
+        os.mkdir(self.workspace)
+        unzip_file(epub_path, self.workspace)
 
     def load_content_opf(self, content_opf_path: str = WORKSPACE + CONTENT_OPF) -> _Element:
         """Load the content.opf file tree"""
@@ -85,22 +81,19 @@ class Epub3:
 
     def validate_epub(self, output_epub: str = "/" + OUTPUT_EPUB):
         """Validate the EPUB file"""
-        success("Validating EPUB file...")
         epubcheck = EpubCheck(output_epub)
-        if not epubcheck.messages:
-            success("EPUB file is valid")
-        else:
+        if epubcheck.messages:
             error("EPUB file has validation issues")
             print(json.dumps(epubcheck.messages, indent=4))
+            raise ValidationError(message="Validation issues found")
+            
         
     def cleanup(self):
         """Remove the workspace directory"""
-        success("Cleaning up workspace...")
         if os.path.exists(self.workspace):
             shutil.rmtree(self.workspace)
-            success("Workspace removed")
         else:
-            warning("Workspace does not exist")
+            raise FileNotFoundError("Workspace doesn't exist")
             
     def __str__(self):
         return f"EPUB3 workspace: {self.workspace}"
