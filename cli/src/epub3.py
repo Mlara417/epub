@@ -59,7 +59,11 @@ class Epub3:
     def get_opf_metadata_value(self, search: str):
         """Get the value of a metadata tag"""
         self.load_content_opf()
-        return self.xml.get_node_value(f"{self.DC}{search}")
+        value = self.xml.get_node_value(f"{self.DC}{search}")
+        if value is None:
+            warning(f"Metadata tag '{search}' not found")
+            raise ValueError(f"Metadata tag '{search}' not found")
+        return value
 
     def get_opf_spine(self):
         """Get the spine from the content.opf file"""
