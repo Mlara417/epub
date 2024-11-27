@@ -1,4 +1,7 @@
 import subprocess, typer
+from rich.console import Console
+
+error_console = Console(stderr=True)
 
 def move_file(src: str, dest: str):
     """Move a file from the source to the destination"""
@@ -23,12 +26,12 @@ def zip_file(flags: str, output_file: str, input_file: str, cwd: str):
 
 def success(message: str):
     """Print a success message"""
-    typer.secho(message=message, fg='green')
+    error_console.print(message, style="bold green")
 
 def warning(message: str):
     """Print a warning message"""
-    typer.secho(message=message, fg='yellow')
+    error_console.print(message, style="bold yellow")
 
 def error(message: str):
     """Print an error message"""
-    typer.secho(message=message, fg='red')
+    error_console.print(message, style="bold red")
