@@ -1,3 +1,11 @@
+## v0.1.12 (2024-12-02)
+
+### Refactor
+
+- add error handling for metadata retrieval in Read command; raise ValueError for missing metadata tags
+- replace typer.secho with rich.console for improved message styling in success, warning, and error functions
+- rename setup and teardown methods to up and down; add error handling for EPUB initialization; enhance EPUB validation and cleanup methods with error handling
+
 ## v0.1.11 (2024-11-25)
 
 ### Fix
