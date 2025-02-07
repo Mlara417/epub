@@ -1,3 +1,9 @@
+## v0.2.0 (2025-02-07)
+
+### Feat
+
+- Add info command to display EPUB metadata
+
 ## v0.1.12 (2024-12-02)
 
 ### Refactor
