@@ -18,8 +18,8 @@ class EpubCLI:
         self.cli.command(name="validate")(self.setup_commands.validate)
 
         # Register nested commands
-        self.cli.add_typer(self.edit_commands.cli, name="edit")
-        self.cli.add_typer(self.read_commands.cli, name="read")
+        self.cli.add_typer(self.edit_commands.cli, name="edit", help="Edit the EPUB file")
+        self.cli.add_typer(self.read_commands.cli, name="read", help="Read the EPUB file")
 
     def run(self):
         self.cli()

@@ -26,6 +26,7 @@ class Setup:
             raise typer.Exit(1)
 
     def validate(self, epub_path: str = typer.Argument(...,help="The path to the epub file")):
+        """Validate the EPUB file"""
         try:
             self.epub.validate_epub(epub_path)
             success("EPUB validated")
