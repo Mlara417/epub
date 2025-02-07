@@ -1,3 +1,9 @@
+## v0.3.0 (2025-02-07)
+
+### Feat
+
+- Add table of contents (TOC) command for EPUB files
+
 ## v0.2.0 (2025-02-07)
 
 ### Feat
