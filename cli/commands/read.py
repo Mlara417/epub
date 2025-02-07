@@ -1,6 +1,7 @@
 import typer
 from cli.src.epub3 import Epub3
-from cli.src.utils import success, error
+from cli.src.utils import success, error, task
+
 class Read:
     def __init__(self):
         self.cli = typer.Typer()
@@ -16,4 +17,14 @@ class Read:
             except ValueError as e:
                 error(f"{e}")
                 raise typer.Exit(1)
-                
+
+        @self.cli.command()
+        def info():
+            """Read information about the EPUB file"""
+            try:
+                metadata = self.epub3.get_opf_metadata_info()
+                for key, value in metadata.items():
+                    task(f"{key.title()}: {value}")
+            except ValueError as e:
+                error(f"{e}")
+                raise typer.Exit(1)
