@@ -65,6 +65,18 @@ class Epub3:
             raise ValueError(f"Metadata tag '{search}' not found")
         return value
 
+    def get_opf_metadata_info(self):
+        """Get the information about the metadata from the content.opf file"""
+        tags = ['title', 'creator', 'language', 'identifier', 'contributor']
+        metadata = {}
+        for tag in tags:
+            try:
+                value = self.get_opf_metadata_value(tag)
+                metadata[tag] = value
+            except ValueError as e:
+                raise ValueError(f"{e}")
+        return metadata
+
     def get_opf_spine(self):
         """Get the spine from the content.opf file"""
         success("Getting spine from content.opf")

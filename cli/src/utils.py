@@ -28,6 +28,10 @@ def success(message: str):
     """Print a success message"""
     error_console.print(message, style="bold green")
 
+def task(message: str):
+    """Print a info message"""
+    error_console.print(message, style="bold blue")
+
 def warning(message: str):
     """Print a warning message"""
     error_console.print(message, style="bold yellow")
