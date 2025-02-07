@@ -1,3 +1,9 @@
+## v0.3.2 (2025-02-07)
+
+### Fix
+
+- Add help text for edit and read commands
+
 ## v0.3.1 (2025-02-07)
 
 ### Fix
