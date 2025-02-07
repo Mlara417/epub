@@ -64,3 +64,48 @@ class TestEditCommands:
             print(f"TEST CLASS EDIT: {edit_mock_instance}")
             print(f"TEST EDIT.EPUB3: {edit_mock_instance.epub3}")
 
+    @patch("cli.commands.edit.subprocess.run")
+    @patch("cli.commands.edit.os.remove")
+    @patch("cli.commands.edit.os.path.exists")
+    def test_replace_command_success(self, mock_os_path_exists, mock_os_remove, mock_subprocess_run):
+        # Define the fake file paths and workspace 
+        updated_file = "tests/data/new_chapter1.xhtml"
+        target_file = "chapter1.xhtml"
+        # The default workspace for Epub3 (see Epub3.__init__) is "epub-unzipped"
+        workspace = "epub-unzipped"
+        target_path = f"{workspace}/{target_file}"
+ 
+        # Define side effect function for os.path.exists:
+        # Return True only for our known files (updated file and the target file path)
+        def exists_side_effect(path):
+            if path in [updated_file, target_path]:
+                return True
+            return False
+        mock_os_path_exists.side_effect = exists_side_effect
+ 
+        # Simulate os.remove succeeding
+        mock_os_remove.return_value = None
+ 
+        # Simulate subprocess.run returning success
+        mock_subprocess_run.return_value = subprocess.CompletedProcess(args=["mv"], returncode=0)
+ 
+        # Invoke the replace command. We do not need to patch Epub3.WORKSPACE because the instance
+        # already holds the default workspace "epub-unzipped".
+        result = self.runner.invoke(self.app, ["edit", "file", target_file, updated_file])
+ 
+        # Make sure the command executed successfully.
+        assert result.exit_code == 0
+ 
+        # Check that os.path.exists was called for both the updated file and the target file.
+        mock_os_path_exists.assert_any_call(updated_file)
+        mock_os_path_exists.assert_any_call(target_path)
+ 
+        # Check that the file removal and moving were invoked with the correct paths.
+        mock_os_remove.assert_called_with(target_path)
+        mock_subprocess_run.assert_called_with(["mv", updated_file, target_path], check=True)
+ 
+        # Optionally, check that the expected success messages are in the output.
+        assert f"Removed existing file: {target_file}" in result.output
+        replaced_pattern = rf"Replaced '{target_file}' with updated content from\s+'?{re.escape(updated_file)}'?\."
+        assert re.search(replaced_pattern, result.output)
+
