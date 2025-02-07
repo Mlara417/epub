@@ -1,3 +1,9 @@
+## v0.3.1 (2025-02-07)
+
+### Fix
+
+- Add file replacement command to edit EPUB contents
+
 ## v0.3.0 (2025-02-07)
 
 ### Feat
