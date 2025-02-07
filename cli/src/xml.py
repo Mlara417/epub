@@ -44,3 +44,7 @@ class Xml:
     def save(self):
         """Write the tree to a file"""
         self.tree.write(self.file_path, pretty_print=True, xml_declaration=True, encoding="utf-8")
+
+    def get_nodes(self, xpath_expr: str) -> list[_Element]:
+        """Return a list of nodes matching the given XPath expression."""
+        return self.root.xpath(xpath_expr, namespaces=self.NAMESPACES)

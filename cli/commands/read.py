@@ -1,6 +1,6 @@
 import typer
 from cli.src.epub3 import Epub3
-from cli.src.utils import success, error, task
+from cli.src.utils import success, error, task, warning
 
 class Read:
     def __init__(self):
@@ -25,6 +25,24 @@ class Read:
                 metadata = self.epub3.get_opf_metadata_info()
                 for key, value in metadata.items():
                     task(f"{key.title()}: {value}")
+            except ValueError as e:
+                error(f"{e}")
+                raise typer.Exit(1)
+
+        @self.cli.command()
+        def toc():
+            """List the table of contents of the EPUB file"""
+            try:
+                toc_items = self.epub3.get_toc()
+                if not toc_items:
+                    warning("No table of contents found")
+                    return
+                
+                task("Table of Contents:")
+                for item in toc_items:
+                    # Indent based on level
+                    indent = "  " * item["level"]
+                    task(f"{indent}• {item['label']} ({item['content']})")
             except ValueError as e:
                 error(f"{e}")
                 raise typer.Exit(1)

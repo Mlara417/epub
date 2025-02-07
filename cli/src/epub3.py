@@ -113,4 +113,43 @@ class Epub3:
             
     def __str__(self):
         return f"EPUB3 workspace: {self.workspace}"
+
+    def get_toc(self):
+        """Get the table of contents from the NAV section in toc.xhtml."""
+        toc_path = f"{self.workspace}/toc.xhtml"
+        if not os.path.exists(toc_path):
+            warning(f"TOC file '{toc_path}' does not exist")
+            return []
+
+        try:
+            from lxml import etree
+            parser = etree.XMLParser(remove_blank_text=True)
+            tree = etree.parse(toc_path, parser)
+            root = tree.getroot()
+            if root is None:
+                warning(f"Failed to retrieve root element from '{toc_path}'")
+                return []
+
+            # Define namespaces for XHTML and epub
+            ns = {'x': 'http://www.w3.org/1999/xhtml', 'epub': 'http://www.idpf.org/2007/ops'}
+            # Find the <nav> element with epub:type="toc" or role="doc-toc"
+            nav_elements = root.xpath('.//x:nav[@epub:type="toc"] | .//x:nav[@role="doc-toc"]', namespaces=ns)
+            if not nav_elements:
+                warning("No <nav> element with toc found")
+                return []
+            nav = nav_elements[0]
+
+            # Find all <li> elements inside the <ol> within the nav element
+            li_elements = nav.xpath('.//ol/li')
+            toc = []
+            for li in li_elements:
+                a_tag = li.find('.//{http://www.w3.org/1999/xhtml}a')
+                if a_tag is None:
+                    continue
+                label = a_tag.text or "Untitled"
+                target = a_tag.get('href', '')
+                toc.append({"label": label, "content": target, "level": 0})
+            return toc
+        except Exception as e:
+            raise ValueError(f"Error reading table of contents: {e}")
     

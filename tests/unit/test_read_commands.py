@@ -5,6 +5,7 @@ from cli.main import get_app
 class TestReadCommands:
     GET_METADATA_VALUE = "cli.src.epub3.Epub3.get_opf_metadata_value"
     GET_METADATA_INFO = "cli.src.epub3.Epub3.get_opf_metadata_info"
+    GET_TOC = "cli.src.epub3.Epub3.get_toc"
     def setup_method(self):
         self.runner = CliRunner()
         self.app = get_app()
@@ -53,3 +54,32 @@ class TestReadCommands:
         assert info_result.exit_code == 1
         assert "Error reading metadata" in info_result.stdout
         mock_read_info.assert_called_once_with()
+
+    @patch(GET_TOC, return_value=[{"label": "Test Chapter", "content": "chapter1.html", "level": 0}])
+    def test_read_toc_command_success(self, mock_get_toc):
+        toc_result = self.runner.invoke(self.app, ["read", "toc"])
+
+        assert toc_result.exit_code == 0
+        # "Table of Contents:" should be printed first.
+        assert "Table of Contents:" in toc_result.stdout
+        # The TOC item should be printed with its bullet and content.
+        assert "• Test Chapter (chapter1.html)" in toc_result.stdout
+        mock_get_toc.assert_called_once_with()
+
+    @patch(GET_TOC, return_value=[])
+    def test_read_toc_command_empty(self, mock_get_toc):
+        toc_result = self.runner.invoke(self.app, ["read", "toc"])
+
+        assert toc_result.exit_code == 0
+        # Expected output when no TOC items are found.
+        assert "No table of contents found" in toc_result.stdout
+        mock_get_toc.assert_called_once_with()
+
+    @patch(GET_TOC, side_effect=ValueError("Error reading toc"))
+    def test_read_toc_command_failure(self, mock_get_toc):
+        toc_result = self.runner.invoke(self.app, ["read", "toc"])
+
+        assert toc_result.exit_code == 1
+        # Ensure the error message is included in the output.
+        assert "Error reading toc" in toc_result.stdout
+        mock_get_toc.assert_called_once_with()
