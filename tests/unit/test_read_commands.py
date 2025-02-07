@@ -4,7 +4,7 @@ from cli.main import get_app
 
 class TestReadCommands:
     GET_METADATA_VALUE = "cli.src.epub3.Epub3.get_opf_metadata_value"
-    
+    GET_METADATA_INFO = "cli.src.epub3.Epub3.get_opf_metadata_info"
     def setup_method(self):
         self.runner = CliRunner()
         self.app = get_app()
@@ -27,3 +27,29 @@ class TestReadCommands:
         assert "Metadata tag 'title' not found" in meta_result.stdout
 
         mock_read_meta.assert_called_once_with("title")
+
+    @patch(GET_METADATA_INFO, return_value={
+        'title': 'Test meta value',
+        'creator': 'Test meta value',
+        'language': 'Test meta value',
+        'identifier': 'Test meta value',
+        'contributor': 'Test meta value'
+    })
+    def test_read_info_command_success(self, mock_read_info):
+        info_result = self.runner.invoke(self.app, ["read", "info"])
+
+        assert info_result.exit_code == 0
+        assert "Title: Test meta value" in info_result.stdout
+        assert "Creator: Test meta value" in info_result.stdout
+        assert "Language: Test meta value" in info_result.stdout
+        assert "Identifier: Test meta value" in info_result.stdout
+        assert "Contributor: Test meta value" in info_result.stdout
+        mock_read_info.assert_called_once_with()
+
+    @patch(GET_METADATA_INFO, side_effect=ValueError("Error reading metadata"))
+    def test_read_info_command_failure(self, mock_read_info):
+        info_result = self.runner.invoke(self.app, ["read", "info"])
+
+        assert info_result.exit_code == 1
+        assert "Error reading metadata" in info_result.stdout
+        mock_read_info.assert_called_once_with()
