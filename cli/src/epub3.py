@@ -101,7 +101,7 @@ class Epub3:
         if epubcheck.messages:
             error("EPUB file has validation issues")
             print(json.dumps(epubcheck.messages, indent=4))
-            raise ValidationError(message="Validation issues found")
+            raise ValidationError("Validation issues found")
             
         
     def cleanup(self):
@@ -151,5 +151,7 @@ class Epub3:
                 toc.append({"label": label, "content": target, "level": 0})
             return toc
         except Exception as e:
+            warning(f"Failed to retrieve root element from '{toc_path}'")
             raise ValueError(f"Error reading table of contents: {e}")
+
     
