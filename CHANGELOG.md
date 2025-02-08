@@ -1,3 +1,9 @@
+## v0.5.0 (2025-02-08)
+
+### Feat
+
+- Add software_tests job dependency to build-and-publish workflow
+
 ## v0.4.4 (2025-02-08)
 
 ### Fix
