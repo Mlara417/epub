@@ -1,3 +1,9 @@
+## v0.3.4 (2025-02-08)
+
+### Fix
+
+- Enhance EPUB editing capabilities with new commands
+
 ## v0.3.3 (2025-02-08)
 
 ### Fix
