@@ -1,3 +1,9 @@
+## v0.4.4 (2025-02-08)
+
+### Fix
+
+- Set PYTHONPATH in test workflow for proper module resolution
+
 ## v0.4.3 (2025-02-08)
 
 ### Fix
