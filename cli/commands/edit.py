@@ -42,11 +42,18 @@ class Edit:
             
         # Command to update the EPUB title
         @self.cli.command("title")
-        def set_title(new_title: str = typer.Argument(..., help="The new title for the EPUB file")):
+        def set_title(
+            new_title: str = typer.Argument(None, help="The new title for the EPUB file"),
+            interactive: bool = typer.Option(False, "--interactive", "-i", help="Enter title interactively")
+        ):
             """Update the EPUB title."""
-            if not new_title.strip():
+            if interactive:
+                new_title = typer.prompt("Enter the new title")
+            
+            if not new_title or not new_title.strip():
                 error("Title cannot be empty.")
                 raise typer.Exit(1)
+                
             success(f"Updating EPUB title to: {new_title}")
             self.epub3.load_content_opf()
             self.epub3.xml.update_dc_metadata("title", new_title)
@@ -55,11 +62,18 @@ class Edit:
 
         # Command to update the EPUB author
         @self.cli.command("author")
-        def set_author(author: str = typer.Argument(..., help="The new author for the EPUB file")):
+        def set_author(
+            author: str = typer.Argument(None, help="The new author for the EPUB file"),
+            interactive: bool = typer.Option(False, "--interactive", "-i", help="Enter author interactively")
+        ):
             """Update the EPUB author."""
-            if not author.strip():
+            if interactive:
+                author = typer.prompt("Enter the new author")
+                
+            if not author or not author.strip():
                 error("Author cannot be empty.")
                 raise typer.Exit(1)
+                
             success(f"Updating EPUB author to: {author}")
             self.epub3.load_content_opf()
             self.epub3.xml.update_dc_metadata("creator", author)
