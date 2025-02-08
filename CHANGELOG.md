@@ -1,3 +1,9 @@
+## v0.4.1 (2025-02-08)
+
+### Fix
+
+- Update Python setup action version in workflow
+
 ## v0.4.0 (2025-02-08)
 
 ### Feat
