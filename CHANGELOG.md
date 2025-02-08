@@ -1,3 +1,9 @@
+## v0.4.2 (2025-02-08)
+
+### Fix
+
+- Simplify test workflow by removing virtual environment setup
+
 ## v0.4.1 (2025-02-08)
 
 ### Fix
