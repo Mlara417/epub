@@ -1,3 +1,9 @@
+## v0.4.0 (2025-02-08)
+
+### Feat
+
+- Add interactive mode for edit title and author commands
+
 ## v0.3.4 (2025-02-08)
 
 ### Fix
