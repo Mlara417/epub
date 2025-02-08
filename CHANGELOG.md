@@ -1,3 +1,9 @@
+## v0.6.0 (2025-02-08)
+
+### Feat
+
+- Rename tests job to unit_tests in workflow configuration
+
 ## v0.5.0 (2025-02-08)
 
 ### Feat
