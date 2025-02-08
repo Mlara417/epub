@@ -1,9 +1,12 @@
 __pycache__
 *.egg-info/
 
+.coverage
 .venv
 .vscode
 
 build
 epub-unzipped
 *.epub
+target.txt
+updated.txt
