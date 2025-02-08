@@ -1,3 +1,9 @@
+## v0.3.3 (2025-02-08)
+
+### Fix
+
+- Add delete command to remove files from EPUB workspace
+
 ## v0.3.2 (2025-02-07)
 
 ### Fix
