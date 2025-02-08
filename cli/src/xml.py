@@ -48,3 +48,25 @@ class Xml:
     def get_nodes(self, xpath_expr: str) -> list[_Element]:
         """Return a list of nodes matching the given XPath expression."""
         return self.root.xpath(xpath_expr, namespaces=self.NAMESPACES)
+
+    def update_dc_metadata(self, tag: str, value: str) -> None:
+        """Update or create a Dublin Core metadata element.
+           tag: e.g., "title" or "creator"
+           value: new content for the tag
+        """
+        # Build the fully namespaced tag using the dc namespace.
+        full_tag = f"{{{self.NAMESPACES['dc']}}}{tag}"
+
+        # Attempt to find the element.
+        elem = self.root.find(f".//{full_tag}")
+        if elem is not None:
+            elem.text = value
+        else:
+            # Look for the metadata element inside the opf document.
+            metadata = self.root.find(".//{http://www.idpf.org/2007/opf}metadata")
+            if metadata is None:
+                raise ValueError("Metadata element not found in content.opf.")
+            from lxml import etree
+            new_elem = etree.Element(full_tag)
+            new_elem.text = value
+            metadata.append(new_elem)
