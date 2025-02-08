@@ -21,4 +21,5 @@ jobs:
 
       - name: Run Tests
         run: |
+          export PYTHONPATH=$(pwd)
           pytest tests/unit
